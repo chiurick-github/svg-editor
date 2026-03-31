@@ -24,27 +24,22 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: 'svg-editor/package-lock.json'
+          cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
-        working-directory: svg-editor
         run: npm ci
 
       - name: Lint
-        working-directory: svg-editor
         run: npm run lint
         continue-on-error: true
 
       - name: Unit Tests
-        working-directory: svg-editor
         run: npm run test:unit
 
       - name: Integration Tests
-        working-directory: svg-editor
         run: npm run test:integration
 
       - name: Full Test Suite with Coverage
-        working-directory: svg-editor
         run: npm run test:coverage
 
       - name: Upload Coverage Report
@@ -52,11 +47,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: svg-editor/coverage/
+          path: coverage/
           retention-days: 14
 
       - name: Build Check
-        working-directory: svg-editor
         run: npm run build
 
   build-check:
@@ -75,18 +69,15 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: 'svg-editor/package-lock.json'
+          cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
-        working-directory: svg-editor
         run: npm ci
 
       - name: Build Electron App
-        working-directory: svg-editor
         run: npm run build
 
       - name: Package macOS DMG
-        working-directory: svg-editor
         run: npx electron-builder --mac --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -95,5 +86,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: svg-editor-mac
-          path: svg-editor/dist/*.dmg
+          path: dist/*.dmg
           retention-days: 7

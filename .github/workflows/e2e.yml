@@ -22,22 +22,18 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: 'svg-editor/package-lock.json'
+          cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
-        working-directory: svg-editor
         run: npm ci
 
       - name: Install Playwright
-        working-directory: svg-editor
         run: npx playwright install --with-deps chromium
 
       - name: Build Electron App
-        working-directory: svg-editor
         run: npm run build
 
       - name: Run E2E Tests
-        working-directory: svg-editor
         run: npx playwright test
         env:
           CI: true
@@ -48,8 +44,8 @@ jobs:
         with:
           name: e2e-results
           path: |
-            svg-editor/test-results/
-            svg-editor/playwright-report/
+            test-results/
+            playwright-report/
           retention-days: 7
 
       - name: E2E Summary
