@@ -1,0 +1,24 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "================================================="
+echo "🧪 Running E2E Tests before pushing to GitHub..."
+echo "================================================="
+
+# Run E2E tests, build if necessary
+npm run test:e2e
+
+# Get the exit code
+status=$?
+
+if [ $status -ne 0 ]; then
+  echo ""
+  echo "❌ E2E Tests Failed! The push has been aborted."
+  echo "Please fix the failing tests before running 'git push' again."
+  echo "================================================="
+  exit 1
+fi
+
+echo "✅ All E2E Tests Passed! Proceeding with push..."
+echo "================================================="
+exit 0

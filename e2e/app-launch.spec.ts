@@ -37,7 +37,7 @@ test.describe('App Launch', () => {
   })
 
   test('should display the canvas container', async () => {
-    const canvas = await page.locator('.canvas-container')
+    const canvas = await page.locator('.canvas-container').first()
     await expect(canvas).toBeVisible()
   })
 
